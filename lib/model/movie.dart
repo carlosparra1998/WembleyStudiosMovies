@@ -86,21 +86,19 @@ class Movie {
     return genreIds;
   }
 
-  Movie getMovieFromJSON(Map jsonAPI) {
-    return Movie(
-        jsonAPI["id"],
-        jsonAPI["title"],
-        jsonAPI["original_title"],
-        jsonAPI["overview"],
-        jsonAPI["original_language"],
-        jsonAPI["poster_path"],
-        jsonAPI["backdrop_path"],
-        jsonAPI["release_date"],
-        jsonAPI["popularity"],
-        jsonAPI["vote_average"],
-        jsonAPI["vote_count"],
-        jsonAPI["adult"],
-        jsonAPI["video"],
-        deserializeGenreIds(jsonAPI["genre_ids"]));
+  Movie.fromJSON(Map<String, dynamic> map) {
+    id = map['id'];
+    title = map['title'];
+    originalTitle = map['original_title'];
+    originalLanguage = map['original_language'];
+    posterPath = map['poster_path'];
+    backdropPath = map['backdrop_path'];
+    releaseDate = map['release_date'];
+    popularity = map['popularity'];
+    voteAverage = map['vote_average'];
+    voteCount = map['vote_count'];
+    adult = map['adult'];
+    video = map['video'];
+    genreIds = map['genreIds'];
   }
 }
