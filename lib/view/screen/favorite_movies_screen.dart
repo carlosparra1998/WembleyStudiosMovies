@@ -1,27 +1,24 @@
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key, required this.title});
+class FavoriteMoviesScreen extends StatefulWidget {
+  const FavoriteMoviesScreen({super.key, required this.title});
 
   final String title;
 
   @override
-  State<HomeScreen> createState() => _HomeScreen();
+  State<FavoriteMoviesScreen> createState() => _FavoriteMoviesScreen();
 }
 
-class _HomeScreen extends State<HomeScreen> {
+class _FavoriteMoviesScreen extends State<FavoriteMoviesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Text(
-              'You have pushed the button this many times:',
+              'FAVORITE FILMS',
             ),
           ],
         ),
