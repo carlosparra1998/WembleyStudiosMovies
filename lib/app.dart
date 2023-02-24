@@ -12,17 +12,14 @@ class WembleyStudiosMoviesApp extends StatelessWidget {
         length: 2,
         child: Scaffold(
           appBar: AppBar(
-            actions: [
-              //add
-              IconButton(icon: Icon(Icons.search), iconSize: 30.0, onPressed: () {})
-            ],
+            toolbarHeight: 10,
             bottom: TabBar(
               tabs: [
                 Tab(icon: Icon(Icons.list)),
                 Tab(icon: Icon(Icons.favorite)),
               ],
             ),
-            title: Text('Wembley Studios Movies'),
+            //title: Text('Wembley Studios Movies', style: TextStyle(fontSize: 15.0),),
           ),
           body: TabBarView(
             children: [

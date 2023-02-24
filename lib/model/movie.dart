@@ -87,18 +87,28 @@ class Movie {
   }
 
   Movie.fromJSON(Map<String, dynamic> map) {
+
+    List<int> receiveGenres = [];
+
+    print(map);
+
+    map['genre_ids'].forEach((v){
+      receiveGenres.add(v);
+    });
+
     id = map['id'];
     title = map['title'];
     originalTitle = map['original_title'];
     originalLanguage = map['original_language'];
-    posterPath = map['poster_path'];
-    backdropPath = map['backdrop_path'];
-    releaseDate = map['release_date'];
-    popularity = map['popularity'];
-    voteAverage = map['vote_average'];
-    voteCount = map['vote_count'];
+    overview = map['overview'] ?? "";
+    posterPath = map['poster_path']  ?? "";
+    backdropPath = map['backdrop_path'] ?? "";
+    releaseDate = map['release_date']  ?? "";
+    popularity = map['popularity']  ?? 0.0;
+    voteAverage = double.parse(map['vote_average'].toString());
+    voteCount = map['vote_count'] ?? 0;
     adult = map['adult'];
     video = map['video'];
-    genreIds = map['genreIds'];
+    genreIds = receiveGenres;
   }
 }

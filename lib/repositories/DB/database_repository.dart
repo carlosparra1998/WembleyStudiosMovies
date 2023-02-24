@@ -3,7 +3,7 @@ import 'package:sqflite/sqflite.dart';
 import '../../model/movie.dart';
 
 class DatabaseRepository {
-  late Database _db;
+  static late Database _db;
 
   initDB() async {
     _db = await openDatabase(
