@@ -29,10 +29,10 @@ class _PopularMoviesScreen extends State<PopularMoviesScreen> {
               padding: const EdgeInsets.all(8.0),
               child: TextField(
                 onChanged: (value) {
-                  
+                  usersViewModel.setCriterion(value);
                   (value.isEmpty)
-                      ? usersViewModel.enablePopularMovieStream()
-                      : usersViewModel.enableSearchMovieStream(value);
+                      ? usersViewModel.enablePopularMovieStream(1)
+                      : usersViewModel.enableSearchMovieStream(value, 1);
                 },
                 decoration: InputDecoration(
                     hintText: "Search",
@@ -53,42 +53,57 @@ class _PopularMoviesScreen extends State<PopularMoviesScreen> {
 
                     return ListView.builder(
                       itemBuilder: (context, index) {
-                        return ListTile(
-                          title: Text(
-                            listMovies[index].title,
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 20.0),
-                          ),
-                          tileColor:
-                              (index % 2 == 0) ? Colors.white : Colors.grey[80],
-                          subtitle: Text(
-                            listMovies[index].voteAverage.toString(),
-                            style: TextStyle(
-                                color: Colors.grey,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 17.0),
-                          ),
-                          trailing: IconButton(
-                            icon: Icon(
-                              (usersViewModel
-                                      .movieInFavorites(listMovies[index]))
-                                  ? Icons.favorite
-                                  : Icons.favorite_border,
-                              size: 20.0,
-                              color: Colors.black,
-                            ),
-                            onPressed: () {
-                              (usersViewModel
-                                      .movieInFavorites(listMovies[index]))
-                                  ? usersViewModel
-                                      .quitFavoriteMovie(listMovies[index])
-                                  : usersViewModel
-                                      .putFavoriteMovie(listMovies[index]);
-                            },
-                          ),
-                        );
+                        return (index != listMovies.length)
+                            ? ListTile(
+                                title: Text(
+                                  listMovies[index].title,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20.0),
+                                ),
+                                tileColor: (index % 2 == 0)
+                                    ? Colors.white
+                                    : Colors.grey[80],
+                                subtitle: Text(
+                                  listMovies[index].voteAverage.toString(),
+                                  style: TextStyle(
+                                      color: Colors.grey,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 17.0),
+                                ),
+                                trailing: IconButton(
+                                  icon: Icon(
+                                    (usersViewModel.movieInFavorites(
+                                            listMovies[index]))
+                                        ? Icons.favorite
+                                        : Icons.favorite_border,
+                                    size: 20.0,
+                                    color: Colors.black,
+                                  ),
+                                  onPressed: () {
+                                    (usersViewModel.movieInFavorites(
+                                            listMovies[index]))
+                                        ? usersViewModel.quitFavoriteMovie(
+                                            listMovies[index])
+                                        : usersViewModel.putFavoriteMovie(
+                                            listMovies[index]);
+                                  },
+                                ),
+                              )
+                            : IconButton(
+                                alignment: Alignment.center,
+                                icon: Icon(Icons.add),
+                                onPressed: () {
+                                  usersViewModel.setCurrentPage(usersViewModel.getCurrentPage() + 1);
+
+                                  if (usersViewModel.getModeListView() == 0) {
+                                    usersViewModel.enablePopularMovieStream(usersViewModel.getCurrentPage());
+                                  } else {
+                                    usersViewModel.enableSearchMovieStream(usersViewModel.getCriterion(), usersViewModel.getCurrentPage());
+                                  }
+                                });
                       },
-                      itemCount: listMovies.length,
+                      itemCount: listMovies.length + 1,
                     );
                   }
                 },

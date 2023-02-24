@@ -30,7 +30,10 @@ class _FavoriteMoviesScreen extends State<FavoriteMoviesScreen> {
               ),
               tileColor: (index % 2 == 0) ? Colors.white : Colors.grey[80],
               subtitle: Text(
-                usersViewModel.getFavoritesMovies()[index].voteAverage.toString(),
+                usersViewModel
+                    .getFavoritesMovies()[index]
+                    .voteAverage
+                    .toString(),
                 style: TextStyle(
                     color: Colors.grey,
                     fontWeight: FontWeight.bold,
@@ -43,7 +46,9 @@ class _FavoriteMoviesScreen extends State<FavoriteMoviesScreen> {
                   color: Colors.black,
                 ),
                 onPressed: () {
-                  // usersViewModel.putFavoriteMovie(listMovies[index]);
+                  (usersViewModel.movieInFavorites(usersViewModel.getFavoritesMovies()[index]))
+                      ? usersViewModel.quitFavoriteMovie(usersViewModel.getFavoritesMovies()[index])
+                      : usersViewModel.putFavoriteMovie(usersViewModel.getFavoritesMovies()[index]);
                 },
               ),
             );
