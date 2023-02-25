@@ -11,7 +11,7 @@ class SearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     MoviesVM usersViewModel = context.watch<MoviesVM>();
-    
+  
     return Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextField(
@@ -22,7 +22,7 @@ class SearchBar extends StatelessWidget {
                       : usersViewModel.enableSearchMovieStream(value, 1);
                 },
                 decoration: InputDecoration(
-                    hintText: "Search",
+                    hintText: "Buscar",
                     prefixIcon: Icon(Icons.search),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(12.0)))),

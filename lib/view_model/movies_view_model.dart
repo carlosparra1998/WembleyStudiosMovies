@@ -1,17 +1,22 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:wembley_studios_movies/model/api_response.dart';
 import 'package:wembley_studios_movies/model/movie.dart';
 import 'package:wembley_studios_movies/repositories/API/api_repository.dart';
 import 'package:wembley_studios_movies/repositories/DB/database_repository.dart';
 import 'package:wembley_studios_movies/repositories/cache/cache_repository.dart';
+import 'package:wembley_studios_movies/utils/show_toast.dart';
+
+import '../model/stream_response.dart';
 
 class MoviesVM with ChangeNotifier {
-  StreamController<List<Movie>> _streamController =
-      BehaviorSubject<List<Movie>>(); //StreamController<List<Movie>>();
+  StreamController<StreamResponse> _streamController =
+      BehaviorSubject<StreamResponse>(); //StreamController<List<Movie>>();
 
-  Stream<List<Movie>> get stream {
+  Stream<StreamResponse> get stream {
     if (!_streamController.hasListener) {
       enablePopularMovieStream(1);
     }
@@ -27,32 +32,67 @@ class MoviesVM with ChangeNotifier {
   Future enablePopularMovieStream(int page) async {
     setModeListView(0);
 
-    List<Movie> popularMovies = await APIRepository().getPopularMovie(page);
+    APIResponse popularMovies = await APIRepository().getPopularMovie(page);
 
-    if (page == 1) {
-      setCurrentPage(1);
-      CacheRepository().setPopularMovies = popularMovies;
-      _streamController.add(popularMovies);
+    if (popularMovies.status != "OK") {
+      String statusStream = "OK";
+
+      if (popularMovies.message == "ERROR") {
+        showToast("No hay conexión a internet");
+        statusStream = "KO";
+      } else {
+        showToast("Error en el servidor");
+        statusStream = "KO";
+      }
+
+      _streamController.add(
+          StreamResponse(statusStream, CacheRepository().getPopularMovies));
     } else {
-      CacheRepository().addPopularMovies = popularMovies;
-      _streamController.add(CacheRepository().getPopularMovies);
+      if (page == 1) {
+        setCurrentPage(1);
+        CacheRepository().setPopularMovies = popularMovies.response;
+        _streamController.add(StreamResponse("OK", popularMovies.response));
+      } else {
+        CacheRepository().addPopularMovies = popularMovies.response;
+        _streamController
+            .add(StreamResponse("OK", CacheRepository().getPopularMovies));
+      }
     }
+
     notifyListeners();
   }
 
   Future enableSearchMovieStream(String criterion, int page) async {
     setModeListView(1);
 
-    List<Movie> searchMovies =
+    APIResponse searchMovies =
         await APIRepository().getSearchMovies(criterion, page);
-    if (page == 1) {
-      setCurrentPage(1);
-      CacheRepository().setPopularMovies = searchMovies;
-      _streamController.add(searchMovies);
+
+    if (searchMovies.status != "OK") {
+      String statusStream = "OK";
+
+      if (searchMovies.message == "ERROR") {
+        showToast("No hay conexión a internet");
+        statusStream = "KO";
+      } else {
+        showToast("Error en el servidor");
+        statusStream = "KO";
+      }
+
+      _streamController.add(
+          StreamResponse(statusStream, CacheRepository().getPopularMovies));
     } else {
-      CacheRepository().addPopularMovies = searchMovies;
-      _streamController.add(CacheRepository().getPopularMovies);
+      if (page == 1) {
+        setCurrentPage(1);
+        CacheRepository().setPopularMovies = searchMovies.response;
+        _streamController.add(StreamResponse("OK", searchMovies.response));
+      } else {
+        CacheRepository().addPopularMovies = searchMovies.response;
+        _streamController
+            .add(StreamResponse("OK", CacheRepository().getPopularMovies));
+      }
     }
+
     notifyListeners();
   }
 
@@ -66,6 +106,7 @@ class MoviesVM with ChangeNotifier {
     CacheRepository().setFavoriteMovie = movie;
     await DatabaseRepository().initDB();
     await DatabaseRepository().insertMovie(movie);
+    showToast("Añadido a tu lista de películas favoritas");
     notifyListeners();
   }
 
@@ -73,11 +114,12 @@ class MoviesVM with ChangeNotifier {
     CacheRepository().deleteFavoriteMovie(movie);
     await DatabaseRepository().initDB();
     await DatabaseRepository().deleteMovie(movie.id);
+    showToast("Retirado de tu lista de películas favoritas");
     notifyListeners();
   }
 
   Future<void> volcadoDatabase2Cache() async {
-    if(getVolcadoOK() == 0){
+    if (getVolcadoOK() == 0) {
       await DatabaseRepository().initDB();
       CacheRepository().setFavoriteMovies =
           await DatabaseRepository().getListMovies();
@@ -85,7 +127,6 @@ class MoviesVM with ChangeNotifier {
       print('database init');
       notifyListeners();
     }
-
   }
 
   bool movieInFavorites(Movie movie) {
