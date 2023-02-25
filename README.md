@@ -1,8 +1,7 @@
-# weApp
+# Wembley Studios Movies (weApp)
 
-Proyecto para la gestión de películas de los empleados de Wembley Studio.
+Aplicación desarrollada en Flutter para la gestión de películas favoritas de los empleados de Wembley Studios.
 
 ## Vídeos de prueba
 
-This project is a starting point for a Flutter application.
 
