@@ -34,7 +34,7 @@ class PopularListView extends StatelessWidget {
             return const Center(child: CircularProgressIndicator());
           } else {
             StreamResponse streamMovies;
-            streamMovies = snapshot.data ?? StreamResponse("KO", []);
+            streamMovies = snapshot.data ?? StreamResponse(s.KO, []);
 
             return ListView.builder(
               itemBuilder: (context, index) {
@@ -59,7 +59,8 @@ class PopularListView extends StatelessWidget {
                                     .response[index].posterPath.isNotEmpty)
                                 ? CachedNetworkImage(
                                     fit: BoxFit.cover,
-                                    imageUrl: "${s.urlGetImageAPI}/${streamMovies.response[index].posterPath}",
+                                    imageUrl:
+                                        "${s.urlGetImageAPI}/${streamMovies.response[index].posterPath}",
                                     placeholder: (context, url) => const Center(
                                         child: CircularProgressIndicator()),
                                     errorWidget: (context, url, error) =>
@@ -67,8 +68,8 @@ class PopularListView extends StatelessWidget {
                                   )
                                 : const SizedBox(
                                     child: DecoratedBox(
-                                      decoration: BoxDecoration(
-                                          color: Colors.grey),
+                                      decoration:
+                                          BoxDecoration(color: Colors.grey),
                                     ),
                                   ),
                           ),
@@ -92,38 +93,63 @@ class PopularListView extends StatelessWidget {
                           },
                         ),
                       )
-                    : ((streamMovies.status == "OK")
-                        ? IconButton(
-                            alignment: Alignment.center,
-                            icon: const Icon(Icons.add),
-                            onPressed: () {
-                              moviesViewModel.setCurrentPage(
-                                  moviesViewModel.getCurrentPage() + 1);
+                    : ((streamMovies.status == s.OK)
+                        ? Center(
+                            child: ClipOval(
+                              child: Material(
+                                color: Colors.black, 
+                                child: InkWell(
+                                  splashColor: Colors.grey, 
+                                  onTap: () {
+                                    moviesViewModel.setCurrentPage(
+                                        moviesViewModel.getCurrentPage() + 1);
 
-                              if (moviesViewModel.getModeListView() == 0) {
-                                moviesViewModel.enablePopularMovieStream(
-                                    moviesViewModel.getCurrentPage());
-                              } else {
-                                moviesViewModel.enableSearchMovieStream(
-                                    moviesViewModel.getCriterion(),
-                                    moviesViewModel.getCurrentPage());
-                              }
-                            })
-                        : IconButton(
-                            alignment: Alignment.center,
-                            icon: const Icon(Icons.refresh),
-                            onPressed: () {
-                              moviesViewModel.setCurrentPage(1);
+                                    if (moviesViewModel.getModeListView() ==
+                                        0) {
+                                      moviesViewModel.enablePopularMovieStream(
+                                          moviesViewModel.getCurrentPage());
+                                    } else {
+                                      moviesViewModel.enableSearchMovieStream(
+                                          moviesViewModel.getCriterion(),
+                                          moviesViewModel.getCurrentPage());
+                                    }
+                                  },
+                                  child: SizedBox(
+                                      width: 35,
+                                      height: 35,
+                                      child:
+                                          Icon(Icons.add, color: Colors.white)),
+                                ),
+                              ),
+                            ),
+                          )
+                        : Center(
+                            child: ClipOval(
+                              child: Material(
+                                color: Colors.black, // Button color
+                                child: InkWell(
+                                  splashColor: Colors.grey, // Splash color
+                                  onTap: () {
+                                    moviesViewModel.setCurrentPage(1);
 
-                              if (moviesViewModel.getModeListView() == 0) {
-                                moviesViewModel.enablePopularMovieStream(
-                                    1);
-                              } else {
-                                moviesViewModel.enableSearchMovieStream(
-                                    moviesViewModel.getCriterion(),
-                                    1);
-                              }
-                            }));
+                                    if (moviesViewModel.getModeListView() ==
+                                        0) {
+                                      moviesViewModel
+                                          .enablePopularMovieStream(1);
+                                    } else {
+                                      moviesViewModel.enableSearchMovieStream(
+                                          moviesViewModel.getCriterion(), 1);
+                                    }
+                                  },
+                                  child: SizedBox(
+                                      width: 35,
+                                      height: 35,
+                                      child:
+                                          Icon(Icons.refresh, color: Colors.white)),
+                                ),
+                              ),
+                            ),
+                          )); 
               },
               itemCount: streamMovies.response.length + 1,
             );
