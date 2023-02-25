@@ -5,5 +5,6 @@ Aplicación desarrollada en Flutter para la gestión de películas favoritas de 
 ## Vídeos de prueba
 ![video1](https://github.com/carlosparra1998/WembleyStudiosMovies/blob/main/readme_raw/1.gif)
 
-<img src="https://github.com/carlosparra1998/WembleyStudiosMovies/blob/main/readme_raw/1.gif" width="250" height="400"/>
+![video2](https://github.com/carlosparra1998/WembleyStudiosMovies/blob/main/readme_raw/2.gif)
 
+![video3](https://github.com/carlosparra1998/WembleyStudiosMovies/blob/main/readme_raw/3.gif)
