@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:wembley_studios_movies/view_model/movies_view_model.dart';
 
-import 'view/screen/home_screen.dart';
+import 'view/home/home_screen.dart';
+
+/*
+   Iniciamos app con pantalla principal.
+*/
 
 class WembleyStudiosMoviesApp extends StatelessWidget {
   const WembleyStudiosMoviesApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
-      theme: ThemeData(
-    primarySwatch: Colors.grey),
-      home: HomeScreen(),
+      theme: ThemeData(primarySwatch: Colors.grey),
+      home: const HomeScreen(),
     );
   }
 }

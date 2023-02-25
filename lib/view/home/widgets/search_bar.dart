@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:provider/provider.dart';
 
-import '../../view_model/movies_view_model.dart';
+import '../../../view_model/movies_view_model.dart';
 
+/*
+   Widget de la barra de búsqueda.
+*/
 class SearchBar extends StatelessWidget {
   const SearchBar({super.key});
 
@@ -21,7 +22,7 @@ class SearchBar extends StatelessWidget {
                       ? usersViewModel.enablePopularMovieStream(1)
                       : usersViewModel.enableSearchMovieStream(value, 1);
                 },
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                     hintText: "Buscar",
                     prefixIcon: Icon(Icons.search),
                     border: OutlineInputBorder(

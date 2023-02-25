@@ -5,7 +5,6 @@ class APIResponse {
   late String message;
   late List<Movie> response;
 
-
   APIResponse(
       this.status,
       this.message,

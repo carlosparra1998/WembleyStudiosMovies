@@ -69,7 +69,7 @@ class Movie {
   String getGenreIdsSerialized() {
     String genreIdsSerialized = "";
 
-    this.genreIds.asMap().forEach((index, element) {
+    genreIds.asMap().forEach((index, element) {
       genreIdsSerialized = (genreIdsSerialized.isEmpty)
           ? "$element"
           : "$genreIdsSerialized;$element";
@@ -90,8 +90,6 @@ class Movie {
 
   Movie.fromJSON(Map<String, dynamic> map) {
     List<int> receiveGenres = [];
-
-    print(map);
 
     map['genre_ids'].forEach((v) {
       receiveGenres.add(v);

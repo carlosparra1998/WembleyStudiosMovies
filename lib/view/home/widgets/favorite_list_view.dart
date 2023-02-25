@@ -1,19 +1,21 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:provider/provider.dart';
 
-import '../../utils/strings.dart' as s;
-import '../../view_model/movies_view_model.dart';
-import 'start_bar.dart';
+import '../../../utils/strings.dart' as s;
+import '../../../view_model/movies_view_model.dart';
+import 'star_row.dart';
+
+/*
+   En este ListView se muestran las películas favoritas por el usuario, todo ello obteniendo la caché gracias al ViewModel.
+*/
 
 class FavoriteListView extends StatelessWidget {
   const FavoriteListView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    MoviesVM usersViewModel = context.watch<MoviesVM>();
+    MoviesVM moviesViewModel = context.watch<MoviesVM>();
 
     return SafeArea(
       child: Center(
@@ -21,34 +23,32 @@ class FavoriteListView extends StatelessWidget {
         itemBuilder: (context, index) {
           return ListTile(
                       title: Text(
-                        usersViewModel.getFavoritesMovies()[index].title,
-                        style: TextStyle(
+                        moviesViewModel.getFavoritesMovies()[index].title,
+                        style: const TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 16.7),
                       ),
                       tileColor:
                           (index % 2 == 0) ? Colors.white : Colors.grey[80],
-                      subtitle: StarBar(usersViewModel.getFavoritesMovies()[index].voteAverage, usersViewModel.getFavoritesMovies()[index].voteCount),
+                      subtitle: StarBar(moviesViewModel.getFavoritesMovies()[index].voteAverage, moviesViewModel.getFavoritesMovies()[index].voteCount),
                       leading: AspectRatio(
                         aspectRatio: 2.35,
                         child: ClipRRect(
                           borderRadius:
                               const BorderRadius.all(Radius.circular(4.0)),
-                          child: (usersViewModel.getFavoritesMovies()[index].posterPath.isNotEmpty)
+                          child: (moviesViewModel.getFavoritesMovies()[index].posterPath.isNotEmpty)
                               ? 
                                 CachedNetworkImage(
                                         fit: BoxFit.cover,
-                                          imageUrl: s.tempGetImageAPI +
-                                              "w500/" +
-                                              usersViewModel.getFavoritesMovies()[index].posterPath,
-                                          placeholder: (context, url) => Center(
+                                          imageUrl: "${s.urlPopularMoviesAPI}w500/${moviesViewModel.getFavoritesMovies()[index].posterPath}",
+                                          placeholder: (context, url) => const Center(
                                               child:
                                                   CircularProgressIndicator()),
                                           errorWidget: (context, url, error) =>
-                                              new Icon(Icons.error),
+                                              const Icon(Icons.error),
                                         )
-                              : SizedBox(
-                                  child: const DecoratedBox(
-                                    decoration: const BoxDecoration(
+                              : const SizedBox(
+                                  child: DecoratedBox(
+                                    decoration: BoxDecoration(
                                         color: Colors.grey),
                                   ),
                                 ),
@@ -56,23 +56,23 @@ class FavoriteListView extends StatelessWidget {
                       ),
                       trailing: IconButton(
                         icon: Icon(
-                          (usersViewModel.movieInFavorites(usersViewModel.getFavoritesMovies()[index]))
+                          (moviesViewModel.movieInFavorites(moviesViewModel.getFavoritesMovies()[index]))
                               ? Icons.favorite
                               : Icons.favorite_border,
                           size: 20.0,
                           color: Colors.black,
                         ),
                         onPressed: () {
-                          (usersViewModel.movieInFavorites(usersViewModel.getFavoritesMovies()[index]))
-                              ? usersViewModel
-                                  .quitFavoriteMovie(usersViewModel.getFavoritesMovies()[index])
-                              : usersViewModel
-                                  .putFavoriteMovie(usersViewModel.getFavoritesMovies()[index]);
+                          (moviesViewModel.movieInFavorites(moviesViewModel.getFavoritesMovies()[index]))
+                              ? moviesViewModel
+                                  .quitFavoriteMovie(moviesViewModel.getFavoritesMovies()[index])
+                              : moviesViewModel
+                                  .putFavoriteMovie(moviesViewModel.getFavoritesMovies()[index]);
                         },
                       ),
                     );
         },
-        itemCount: usersViewModel.getFavoritesMovies().length,
+        itemCount: moviesViewModel.getFavoritesMovies().length,
       )),
     );
   }

@@ -16,28 +16,14 @@ class DatabaseRepository {
     );
   }
 
-  //CREATE
-
-  insertMovies(List<Movie> listMovies) {
-    listMovies.forEach((movie) {
-      insertMovie(movie);
-    });
-  }
-
   insertMovie(Movie c) async {
     _db.insert("movie", c.toMap());
   }
-
-  //READ
 
   Future<List<Movie>> getListMovies() async {
     List<Map<String, dynamic>> results = await _db.query("movie");
     return results.map((map) => Movie.fromMap(map)).toList();
   }
-
-  //UPDATE
-
-  //DELETE
 
   deleteMovie(int id) async {
     _db.delete(
@@ -47,7 +33,4 @@ class DatabaseRepository {
     );
   }
 
-  deleteListMovies() async {
-    await _db.delete('movie');
-  }
 }

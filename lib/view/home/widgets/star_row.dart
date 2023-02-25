@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
+/*
+   Widget de la fila de estrellas de las reseñas (y lógica).
+*/
 class StarBar extends StatelessWidget {
   double voteAverage;
   int voteCount;
@@ -17,8 +18,8 @@ class StarBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(children: [
       Text(
-        voteAverage.toString() + " ",
-        style: TextStyle(fontWeight: FontWeight.normal),
+        "$voteAverage ",
+        style: const TextStyle(fontWeight: FontWeight.normal),
       ),
       Icon(
         getStar(1),
@@ -40,7 +41,7 @@ class StarBar extends StatelessWidget {
         getStar(5),
         size: 14.0,
       ),
-      Text(" (" + voteCount.toString() + ")")
+      Text(" ($voteCount)")
     ]);
   }
 }

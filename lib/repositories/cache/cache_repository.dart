@@ -6,9 +6,8 @@ class CacheRepository {
 
   static int _currentPage = 1;
   static int _modeListView = 0; // 0 -> populars, 1 -> search
-  static String _criterion = "";
-
   static int _volcadoOK = 0;
+  static String _criterion = "";
 
   get getPopularMovies {
     return _popularMovies;
@@ -71,8 +70,8 @@ class CacheRepository {
   }
 
   set addPopularMovies(List<Movie> popularMovies) {
-    popularMovies.forEach((movie) {
+    for (var movie in popularMovies) {
       _popularMovies.add(movie);
-    });
+    }
   }
 }

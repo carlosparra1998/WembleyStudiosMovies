@@ -1,20 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:provider/provider.dart';
 
-import '../../view_model/movies_view_model.dart';
-import '../widgets/favorite_movies_tab.dart';
-import '../widgets/popular_movies_tab.dart';
+import '../../../view_model/movies_view_model.dart';
+import 'tabs/favorite_movies_tab.dart';
+import 'tabs/popular_movies_tab.dart';
+
+/*
+   Pantalla principal (hacemos uso de 2 tabs : lista de películas populares y favoritas).
+*/
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    MoviesVM usersViewModel = context.watch<MoviesVM>();
+    MoviesVM moviesViewModel = context.watch<MoviesVM>();
 
-    usersViewModel.volcadoDatabase2Cache();
+
+    //PERSISTENCIA: Volcamos la lista de películas favoritas a la memoria caché.
+
+    moviesViewModel.volcadoDatabase2Cache();
 
     return DefaultTabController(
       length: 2,
@@ -25,16 +30,16 @@ class HomeScreen extends StatelessWidget {
           bottom: TabBar(
             indicatorColor: Colors.grey[200],
             labelColor: Colors.white,
-            tabs: [
+            tabs: const [
               Tab(text: 
                 'Populares'),
               Tab(text: 
                 'Mi lista'),
             ],
           ),
-          //title: Text('Wembley Studios Movies', style: TextStyle(fontSize: 15.0),),
+          
         ),
-        body: TabBarView(
+        body: const TabBarView(
           children: [PopularMoviesTab(title: ''), FavoriteMoviesTab(title: '')],
         ),
       ),

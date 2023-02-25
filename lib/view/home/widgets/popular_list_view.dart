@@ -1,26 +1,34 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
-import 'package:wembley_studios_movies/model/stream_response.dart';
-import 'package:wembley_studios_movies/view/widgets/start_bar.dart';
+import '../../../model/stream_response.dart';
+import '../../../utils/strings.dart' as s;
+import '../../../view_model/movies_view_model.dart';
+import 'star_row.dart';
 
-import '../../model/movie.dart';
-import '../../utils/strings.dart' as s;
-import '../../view_model/movies_view_model.dart';
+/*
+   En este ListView se muestran las películas más populares, o las buscadas por el propio usuario, todo ello obteniendo 
+   el stream de comunicación, el cual se conecta a las APIs necesarias. El stream se obtiene por el ViewModel.
+*/
+
+/*
+   Si el usuario desea acceder a páginas posteriores de películas, debe de deslizarse al final de la lista, y par ello deberá pulsar el botón correspondiente.
+*/
+
+/*
+   Si el usuario desea buscar películas a partir de un criterio de búsqueda, podrá usar el widget correspondiente, con la misma lógica que las películas populares.
+*/
 
 class PopularListView extends StatelessWidget {
   const PopularListView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    MoviesVM usersViewModel = context.watch<MoviesVM>();
+    MoviesVM moviesViewModel = context.watch<MoviesVM>();
 
     return Expanded(
       child: StreamBuilder(
-        stream: usersViewModel.stream,
+        stream: moviesViewModel.stream,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -51,17 +59,15 @@ class PopularListView extends StatelessWidget {
                                     .response[index].posterPath.isNotEmpty)
                                 ? CachedNetworkImage(
                                     fit: BoxFit.cover,
-                                    imageUrl: s.tempGetImageAPI +
-                                        "w500/" +
-                                        streamMovies.response[index].posterPath,
-                                    placeholder: (context, url) => Center(
+                                    imageUrl: "${s.urlGetImageAPI}/${streamMovies.response[index].posterPath}",
+                                    placeholder: (context, url) => const Center(
                                         child: CircularProgressIndicator()),
                                     errorWidget: (context, url, error) =>
-                                        new Icon(Icons.error),
+                                        const Icon(Icons.error),
                                   )
-                                : SizedBox(
-                                    child: const DecoratedBox(
-                                      decoration: const BoxDecoration(
+                                : const SizedBox(
+                                    child: DecoratedBox(
+                                      decoration: BoxDecoration(
                                           color: Colors.grey),
                                     ),
                                   ),
@@ -69,7 +75,7 @@ class PopularListView extends StatelessWidget {
                         ),
                         trailing: IconButton(
                           icon: Icon(
-                            (usersViewModel.movieInFavorites(
+                            (moviesViewModel.movieInFavorites(
                                     streamMovies.response[index]))
                                 ? Icons.favorite
                                 : Icons.favorite_border,
@@ -77,11 +83,11 @@ class PopularListView extends StatelessWidget {
                             color: Colors.black,
                           ),
                           onPressed: () {
-                            (usersViewModel.movieInFavorites(
+                            (moviesViewModel.movieInFavorites(
                                     streamMovies.response[index]))
-                                ? usersViewModel.quitFavoriteMovie(
+                                ? moviesViewModel.quitFavoriteMovie(
                                     streamMovies.response[index])
-                                : usersViewModel.putFavoriteMovie(
+                                : moviesViewModel.putFavoriteMovie(
                                     streamMovies.response[index]);
                           },
                         ),
@@ -89,32 +95,32 @@ class PopularListView extends StatelessWidget {
                     : ((streamMovies.status == "OK")
                         ? IconButton(
                             alignment: Alignment.center,
-                            icon: Icon(Icons.add),
+                            icon: const Icon(Icons.add),
                             onPressed: () {
-                              usersViewModel.setCurrentPage(
-                                  usersViewModel.getCurrentPage() + 1);
+                              moviesViewModel.setCurrentPage(
+                                  moviesViewModel.getCurrentPage() + 1);
 
-                              if (usersViewModel.getModeListView() == 0) {
-                                usersViewModel.enablePopularMovieStream(
-                                    usersViewModel.getCurrentPage());
+                              if (moviesViewModel.getModeListView() == 0) {
+                                moviesViewModel.enablePopularMovieStream(
+                                    moviesViewModel.getCurrentPage());
                               } else {
-                                usersViewModel.enableSearchMovieStream(
-                                    usersViewModel.getCriterion(),
-                                    usersViewModel.getCurrentPage());
+                                moviesViewModel.enableSearchMovieStream(
+                                    moviesViewModel.getCriterion(),
+                                    moviesViewModel.getCurrentPage());
                               }
                             })
                         : IconButton(
                             alignment: Alignment.center,
-                            icon: Icon(Icons.refresh),
+                            icon: const Icon(Icons.refresh),
                             onPressed: () {
-                              usersViewModel.setCurrentPage(1);
+                              moviesViewModel.setCurrentPage(1);
 
-                              if (usersViewModel.getModeListView() == 0) {
-                                usersViewModel.enablePopularMovieStream(
+                              if (moviesViewModel.getModeListView() == 0) {
+                                moviesViewModel.enablePopularMovieStream(
                                     1);
                               } else {
-                                usersViewModel.enableSearchMovieStream(
-                                    usersViewModel.getCriterion(),
+                                moviesViewModel.enableSearchMovieStream(
+                                    moviesViewModel.getCriterion(),
                                     1);
                               }
                             }));
