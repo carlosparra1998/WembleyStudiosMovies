@@ -58,8 +58,8 @@ class Movie {
     backdropPath = map['backdrop_path'];
     overview = map['overview'];
     releaseDate = map['release_date'];
-    popularity =double.parse( map['popularity']);
-    voteAverage = map['vote_average'];
+    popularity =double.parse(map['popularity']);
+    voteAverage = double.parse(map['vote_average'].toString());
     voteCount = map['vote_count'];
     adult = (map['adult'] == 0) ? false : true;
     video = (map['video'] == 0) ? false : true;

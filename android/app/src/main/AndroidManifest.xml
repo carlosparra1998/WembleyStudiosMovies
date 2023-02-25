@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.wembley_studios_movies">
    <application
-        android:label="wembley_studios_movies"
+        android:label="weMovies"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

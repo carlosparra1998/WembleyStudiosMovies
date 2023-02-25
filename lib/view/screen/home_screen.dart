@@ -20,11 +20,16 @@ class HomeScreen extends StatelessWidget {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.black,
           toolbarHeight: 10,
           bottom: TabBar(
+            indicatorColor: Colors.grey[200],
+            labelColor: Colors.white,
             tabs: [
-              Tab(icon: Icon(Icons.list)),
-              Tab(icon: Icon(Icons.favorite)),
+              Tab(text: 
+                'Populares'),
+              Tab(text: 
+                'Mi lista'),
             ],
           ),
           //title: Text('Wembley Studios Movies', style: TextStyle(fontSize: 15.0),),
