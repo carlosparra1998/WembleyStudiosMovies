@@ -37,6 +37,7 @@ class Movie {
       "original_title": originalTitle,
       "original_language": originalLanguage,
       "poster_path": posterPath,
+      "overview" : overview,
       "backdrop_path": backdropPath,
       "release_date": releaseDate,
       "popularity": popularity,
@@ -55,13 +56,14 @@ class Movie {
     originalLanguage = map['original_language'];
     posterPath = map['poster_path'];
     backdropPath = map['backdrop_path'];
+    overview = map['overview'];
     releaseDate = map['release_date'];
-    popularity = map['popularity'];
+    popularity =double.parse( map['popularity']);
     voteAverage = map['vote_average'];
     voteCount = map['vote_count'];
-    adult = map['adult'];
-    video = map['video'];
-    genreIds = deserializeGenreIds(map['genreIds']);
+    adult = (map['adult'] == 0) ? false : true;
+    video = (map['video'] == 0) ? false : true;
+    genreIds = deserializeGenreIds(map['genre_ids']);
   }
 
   String getGenreIdsSerialized() {
@@ -87,12 +89,11 @@ class Movie {
   }
 
   Movie.fromJSON(Map<String, dynamic> map) {
-
     List<int> receiveGenres = [];
 
     print(map);
 
-    map['genre_ids'].forEach((v){
+    map['genre_ids'].forEach((v) {
       receiveGenres.add(v);
     });
 
@@ -101,10 +102,10 @@ class Movie {
     originalTitle = map['original_title'];
     originalLanguage = map['original_language'];
     overview = map['overview'] ?? "";
-    posterPath = map['poster_path']  ?? "";
+    posterPath = map['poster_path'] ?? "";
     backdropPath = map['backdrop_path'] ?? "";
-    releaseDate = map['release_date']  ?? "";
-    popularity = map['popularity']  ?? 0.0;
+    releaseDate = map['release_date'] ?? "";
+    popularity = map['popularity'] ?? 0.0;
     voteAverage = double.parse(map['vote_average'].toString());
     voteCount = map['vote_count'] ?? 0;
     adult = map['adult'];

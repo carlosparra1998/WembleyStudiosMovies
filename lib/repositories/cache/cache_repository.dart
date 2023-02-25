@@ -8,6 +8,8 @@ class CacheRepository {
   static int _modeListView = 0; // 0 -> populars, 1 -> search
   static String _criterion = "";
 
+  static int _volcadoOK = 0;
+
   get getPopularMovies {
     return _popularMovies;
   }
@@ -20,24 +22,34 @@ class CacheRepository {
     return _currentPage;
   }
 
-  get getModeListView{
+  get getModeListView {
     return _modeListView;
   }
 
-  get getCriterion{
+  get getCriterion {
     return _criterion;
+  }
+
+  get getVolcadoOK {
+    return _volcadoOK;
   }
 
   set setCurrentPage(int page) {
     _currentPage = page;
   }
 
-  set setModeListView(int mode){
+  set setModeListView(int mode) {
     _modeListView = mode;
   }
-  set setCriterion(String criterion){
+
+  set setCriterion(String criterion) {
     _criterion = criterion;
   }
+
+  set setVolcadoOK(int volcado) {
+    _volcadoOK = volcado;
+  }
+
   void deleteFavoriteMovie(Movie movie) {
     _favoritesMovies.removeWhere((m) => m.id == movie.id);
   }

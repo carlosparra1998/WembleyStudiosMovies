@@ -11,7 +11,7 @@ class DatabaseRepository {
       version: 1,
       onCreate: (Database db, int version) {
         db.execute(
-            "CREATE TABLE movie (id NUMERIC PRIMARY KEY, title TEXT NOT NULL, original_title TEXT NOT NULL, overview TEXT NOT NULL, original_language TEXT NOT NULL, poster_path TEXT NOT NULL, backdrop_path TEXT NOT NULL, release_date TEXT NOT NULL, popularity TEXT NOT NULL, vote_average NUMERIC NOT NULL, vote_count NUMERIC NOT NULL, adult NUMERIC NOT NULL, video NUMERIC NOT NULL, genreIds TEXT NOT NULL);");
+            "CREATE TABLE movie (id NUMERIC PRIMARY KEY, title TEXT NOT NULL, original_title TEXT NOT NULL, overview TEXT NOT NULL, original_language TEXT NOT NULL, poster_path TEXT NOT NULL, backdrop_path TEXT NOT NULL, release_date TEXT NOT NULL, popularity TEXT NOT NULL, vote_average NUMERIC NOT NULL, vote_count NUMERIC NOT NULL, adult NUMERIC NOT NULL, video NUMERIC NOT NULL, genre_ids TEXT NOT NULL);");
       },
     );
   }

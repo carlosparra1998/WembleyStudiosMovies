@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:wembley_studios_movies/model/movie.dart';
 import 'package:wembley_studios_movies/repositories/API/api_repository.dart';
 import 'package:wembley_studios_movies/repositories/DB/database_repository.dart';
@@ -8,7 +9,7 @@ import 'package:wembley_studios_movies/repositories/cache/cache_repository.dart'
 
 class MoviesVM with ChangeNotifier {
   StreamController<List<Movie>> _streamController =
-      StreamController<List<Movie>>();
+      BehaviorSubject<List<Movie>>(); //StreamController<List<Movie>>();
 
   Stream<List<Movie>> get stream {
     if (!_streamController.hasListener) {
@@ -16,6 +17,11 @@ class MoviesVM with ChangeNotifier {
     }
 
     return _streamController.stream;
+  }
+
+  void disposeStream() {
+    _streamController.close();
+    notifyListeners();
   }
 
   Future enablePopularMovieStream(int page) async {
@@ -58,21 +64,28 @@ class MoviesVM with ChangeNotifier {
 
   void putFavoriteMovie(Movie movie) async {
     CacheRepository().setFavoriteMovie = movie;
-    //await DatabaseRepository().initDB();
-    //await DatabaseRepository().insertMovie(movie);
+    await DatabaseRepository().initDB();
+    await DatabaseRepository().insertMovie(movie);
     notifyListeners();
   }
 
   void quitFavoriteMovie(Movie movie) async {
     CacheRepository().deleteFavoriteMovie(movie);
+    await DatabaseRepository().initDB();
+    await DatabaseRepository().deleteMovie(movie.id);
     notifyListeners();
   }
 
   Future<void> volcadoDatabase2Cache() async {
-    await DatabaseRepository().initDB();
-    CacheRepository().setFavoriteMovies =
-        await DatabaseRepository().getListMovies();
-    notifyListeners();
+    if(getVolcadoOK() == 0){
+      await DatabaseRepository().initDB();
+      CacheRepository().setFavoriteMovies =
+          await DatabaseRepository().getListMovies();
+      setVolcadoOK(1);
+      print('database init');
+      notifyListeners();
+    }
+
   }
 
   bool movieInFavorites(Movie movie) {
@@ -90,4 +103,8 @@ class MoviesVM with ChangeNotifier {
 
   void setCriterion(String criterion) =>
       CacheRepository().setCriterion = criterion;
+
+  int getVolcadoOK() => CacheRepository().getVolcadoOK;
+
+  void setVolcadoOK(int volcado) => CacheRepository().setVolcadoOK = volcado;
 }
