@@ -39,7 +39,7 @@ class FavoriteListView extends StatelessWidget {
                               ? 
                                 CachedNetworkImage(
                                         fit: BoxFit.cover,
-                                          imageUrl: "${s.urlPopularMoviesAPI}w500/${moviesViewModel.getFavoritesMovies()[index].posterPath}",
+                                          imageUrl: "${s.urlGetImageAPI}/${moviesViewModel.getFavoritesMovies()[index].posterPath}",
                                           placeholder: (context, url) => const Center(
                                               child:
                                                   CircularProgressIndicator()),
