@@ -1,19 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:provider/provider.dart';
 import 'package:wembley_studios_movies/app.dart';
+import 'package:wembley_studios_movies/view/home/widgets/popular_list_view.dart';
+import 'package:wembley_studios_movies/view/home/widgets/search_bar.dart';
+import 'package:wembley_studios_movies/view_model/movies_view_model.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
+  testWidgets('Aparece la interfaz de usuario al iniciar la app',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => MoviesVM()),
+      ],
+      child: const WembleyStudiosMoviesApp(),
+    ));
 
-    await tester.pumpWidget(const WembleyStudiosMoviesApp());
+    final searchBarFinder = find.byType(SearchBar);
+    final listViewFinder = find.byType(PopularListView);
 
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
-
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    expect(searchBarFinder, findsOneWidget);
+    expect(listViewFinder, findsOneWidget);
   });
+
 }
