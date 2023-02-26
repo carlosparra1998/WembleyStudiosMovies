@@ -41,7 +41,6 @@ class MoviesVM with ChangeNotifier {
   void setVolcadoOK(int volcado) => CacheRepository().setVolcadoOK = volcado;
 
 
-
   void putFavoriteMovie(Movie movie) async {
     CacheRepository().setFavoriteMovie = movie;
     await DatabaseRepository().initDB();
