@@ -14,6 +14,9 @@ import '../utils/strings.dart' as s;
 class MoviesVM with ChangeNotifier {
   final StreamController<StreamResponse> _streamController =
       BehaviorSubject<StreamResponse>(); 
+  
+  final listController = ScrollController();
+
 
   bool movieInFavorites(Movie movie) => CacheRepository().movieInFavorites(movie);
   

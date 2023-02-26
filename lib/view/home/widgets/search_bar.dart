@@ -12,22 +12,27 @@ class SearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     MoviesVM usersViewModel = context.watch<MoviesVM>();
-  
+
     return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextField(
-                onChanged: (value) {
-                  usersViewModel.setCriterion(value);
-                  (value.isEmpty)
-                      ? usersViewModel.enablePopularMovieStream(1)
-                      : usersViewModel.enableSearchMovieStream(value, 1);
-                },
-                decoration: const InputDecoration(
-                    hintText: "Buscar",
-                    prefixIcon: Icon(Icons.search),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(12.0)))),
-              ),
-            );
+      padding: const EdgeInsets.all(8.0),
+      child: TextField(
+        onChanged: (value) {
+          usersViewModel.listController.position.animateTo(
+            1.0,
+            duration: const Duration(milliseconds: 100),
+            curve: Curves.easeInOut,
+          );
+          usersViewModel.setCriterion(value);
+          (value.isEmpty)
+              ? usersViewModel.enablePopularMovieStream(1)
+              : usersViewModel.enableSearchMovieStream(value, 1);
+        },
+        decoration: const InputDecoration(
+            hintText: "Buscar",
+            prefixIcon: Icon(Icons.search),
+            border: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(12.0)))),
+      ),
+    );
   }
 }

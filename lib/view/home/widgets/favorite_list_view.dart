@@ -31,7 +31,7 @@ class FavoriteListView extends StatelessWidget {
                 moviesViewModel.getFavoritesMovies()[index].voteAverage,
                 moviesViewModel.getFavoritesMovies()[index].voteCount),
             leading: AspectRatio(
-              aspectRatio: 2.0,
+              aspectRatio: 1.7,
               child: ClipRRect(
                 borderRadius: const BorderRadius.all(Radius.circular(4.0)),
                 child: (moviesViewModel

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import '../widgets/popular_list_view.dart';
@@ -10,7 +9,7 @@ import '../widgets/search_bar.dart';
 
 class PopularMoviesTab extends StatefulWidget {
   const PopularMoviesTab({super.key, required this.title});
-  
+
   final String title;
 
   @override
@@ -25,7 +24,7 @@ class _PopularMoviesTab extends State<PopularMoviesTab> {
       body: SafeArea(
         child: Center(
             child: Column(
-          children: const [SearchBar(), PopularListView()],
+          children: [const SearchBar(), PopularListView()],
         )),
       ),
     );

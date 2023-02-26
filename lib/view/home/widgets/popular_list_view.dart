@@ -20,7 +20,7 @@ import 'star_row.dart';
 */
 
 class PopularListView extends StatelessWidget {
-  const PopularListView({super.key});
+  PopularListView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +37,7 @@ class PopularListView extends StatelessWidget {
             streamMovies = snapshot.data ?? StreamResponse(s.KO, []);
 
             return ListView.builder(
+              controller: moviesViewModel.listController,
               itemBuilder: (context, index) {
                 return (index != streamMovies.response.length)
                     ? ListTile(
@@ -51,7 +52,7 @@ class PopularListView extends StatelessWidget {
                             streamMovies.response[index].voteAverage,
                             streamMovies.response[index].voteCount),
                         leading: AspectRatio(
-                          aspectRatio: 2.0,
+                          aspectRatio: 1.7,
                           child: ClipRRect(
                             borderRadius:
                                 const BorderRadius.all(Radius.circular(4.0)),
