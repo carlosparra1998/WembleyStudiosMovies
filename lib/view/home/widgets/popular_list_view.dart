@@ -43,7 +43,7 @@ class PopularListView extends StatelessWidget {
                         title: Text(
                           streamMovies.response[index].title,
                           style: const TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 16.7),
+                              fontWeight: FontWeight.bold, fontSize: 14),
                         ),
                         tileColor:
                             (index % 2 == 0) ? Colors.white : Colors.grey[80],
@@ -51,7 +51,7 @@ class PopularListView extends StatelessWidget {
                             streamMovies.response[index].voteAverage,
                             streamMovies.response[index].voteCount),
                         leading: AspectRatio(
-                          aspectRatio: 2.35,
+                          aspectRatio: 2.0,
                           child: ClipRRect(
                             borderRadius:
                                 const BorderRadius.all(Radius.circular(4.0)),
@@ -130,15 +130,14 @@ class PopularListView extends StatelessWidget {
                                 child: InkWell(
                                   splashColor: Colors.grey, // Splash color
                                   onTap: () {
-                                    moviesViewModel.setCurrentPage(1);
-
                                     if (moviesViewModel.getModeListView() ==
                                         0) {
-                                      moviesViewModel
-                                          .enablePopularMovieStream(1);
+                                      moviesViewModel.enablePopularMovieStream(
+                                          moviesViewModel.getCurrentPage());
                                     } else {
                                       moviesViewModel.enableSearchMovieStream(
-                                          moviesViewModel.getCriterion(), 1);
+                                          moviesViewModel.getCriterion(),
+                                          moviesViewModel.getCurrentPage());
                                     }
                                   },
                                   child: SizedBox(

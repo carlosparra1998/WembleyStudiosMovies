@@ -22,55 +22,57 @@ class FavoriteListView extends StatelessWidget {
           child: ListView.builder(
         itemBuilder: (context, index) {
           return ListTile(
-                      title: Text(
-                        moviesViewModel.getFavoritesMovies()[index].title,
-                        style: const TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 16.7),
-                      ),
-                      tileColor:
-                          (index % 2 == 0) ? Colors.white : Colors.grey[80],
-                      subtitle: StarBar(moviesViewModel.getFavoritesMovies()[index].voteAverage, moviesViewModel.getFavoritesMovies()[index].voteCount),
-                      leading: AspectRatio(
-                        aspectRatio: 2.35,
-                        child: ClipRRect(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(4.0)),
-                          child: (moviesViewModel.getFavoritesMovies()[index].posterPath.isNotEmpty)
-                              ? 
-                                CachedNetworkImage(
-                                        fit: BoxFit.cover,
-                                          imageUrl: "${s.urlGetImageAPI}/${moviesViewModel.getFavoritesMovies()[index].posterPath}",
-                                          placeholder: (context, url) => const Center(
-                                              child:
-                                                  CircularProgressIndicator()),
-                                          errorWidget: (context, url, error) =>
-                                              const Icon(Icons.error),
-                                        )
-                              : const SizedBox(
-                                  child: DecoratedBox(
-                                    decoration: BoxDecoration(
-                                        color: Colors.grey),
-                                  ),
-                                ),
+            title: Text(
+              moviesViewModel.getFavoritesMovies()[index].title,
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+            ),
+            tileColor: (index % 2 == 0) ? Colors.white : Colors.grey[80],
+            subtitle: StarBar(
+                moviesViewModel.getFavoritesMovies()[index].voteAverage,
+                moviesViewModel.getFavoritesMovies()[index].voteCount),
+            leading: AspectRatio(
+              aspectRatio: 2.0,
+              child: ClipRRect(
+                borderRadius: const BorderRadius.all(Radius.circular(4.0)),
+                child: (moviesViewModel
+                        .getFavoritesMovies()[index]
+                        .posterPath
+                        .isNotEmpty)
+                    ? CachedNetworkImage(
+                        fit: BoxFit.cover,
+                        imageUrl:
+                            "${s.urlGetImageAPI}/${moviesViewModel.getFavoritesMovies()[index].posterPath}",
+                        placeholder: (context, url) =>
+                            const Center(child: CircularProgressIndicator()),
+                        errorWidget: (context, url, error) =>
+                            const Icon(Icons.error),
+                      )
+                    : const SizedBox(
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(color: Colors.grey),
                         ),
                       ),
-                      trailing: IconButton(
-                        icon: Icon(
-                          (moviesViewModel.movieInFavorites(moviesViewModel.getFavoritesMovies()[index]))
-                              ? Icons.favorite
-                              : Icons.favorite_border,
-                          size: 20.0,
-                          color: Colors.black,
-                        ),
-                        onPressed: () {
-                          (moviesViewModel.movieInFavorites(moviesViewModel.getFavoritesMovies()[index]))
-                              ? moviesViewModel
-                                  .quitFavoriteMovie(moviesViewModel.getFavoritesMovies()[index])
-                              : moviesViewModel
-                                  .putFavoriteMovie(moviesViewModel.getFavoritesMovies()[index]);
-                        },
-                      ),
-                    );
+              ),
+            ),
+            trailing: IconButton(
+              icon: Icon(
+                (moviesViewModel.movieInFavorites(
+                        moviesViewModel.getFavoritesMovies()[index]))
+                    ? Icons.favorite
+                    : Icons.favorite_border,
+                size: 20.0,
+                color: Colors.black,
+              ),
+              onPressed: () {
+                (moviesViewModel.movieInFavorites(
+                        moviesViewModel.getFavoritesMovies()[index]))
+                    ? moviesViewModel.quitFavoriteMovie(
+                        moviesViewModel.getFavoritesMovies()[index])
+                    : moviesViewModel.putFavoriteMovie(
+                        moviesViewModel.getFavoritesMovies()[index]);
+              },
+            ),
+          );
         },
         itemCount: moviesViewModel.getFavoritesMovies().length,
       )),
