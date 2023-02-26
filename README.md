@@ -20,4 +20,3 @@ En este fragmento podemos comprobar el funcionamiento del search bar.
 
 
 ![](https://github.com/carlosparra1998/WembleyStudiosMovies/blob/main/readme_raw/3.gif)
-
