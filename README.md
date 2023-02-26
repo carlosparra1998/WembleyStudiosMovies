@@ -16,23 +16,26 @@ Se ha creado un único ViewModel para la gestión de la funcionalidad inherente 
 
 La obtención de los datos, tanto de las películas populares como las buscadas por el usuario, se llevará a cabo gracias a un **stream** que comunica el View con el ViewModel de la entidad Movie. En el caso de interactuar con la aplicación al darle al botón de siguiente página, o la búsqueda, implica que el stream seguirá actualizándose. 
 
-En torno a la lógica de los likes, para la **persistencia** de las películas seleccionadas como favoritas se ha creado una base de datos con *SQLite*. Al iniciar la app, se realiza un volcado de la base de datos a la caché. De esta forma, el usuario tendrá en todo momento disponible su lista de películas favoritas.
+Para la **persistencia** de las películas seleccionadas como favoritas se ha creado una base de datos con *SQLite*. Al iniciar la app, se realiza un volcado de la base de datos a la caché. De esta forma, el usuario tendrá en todo momento disponible su lista de películas favoritas.
 
 ## Vídeos de prueba
 
-En este fragmento podemos comprobar el funcionamiento de la lista de películas populares obtenidas por la API correspondiente. Incluso el cambio de página con el botón de ADD.
+En este fragmento podemos comprobar el funcionamiento de la lista de películas populares obtenidas por la API correspondiente. Incluso el acceso a la siguiente página de la lista.
+
+<p align="center">
+  <img src="https://github.com/carlosparra1998/WembleyStudiosMovies/blob/main/readme_raw/1.gif" />
+</p>
+
+En este fragmento podemos comprobar el funcionamiento de las películas **favoritas** del usuario.
 
 
-![](https://github.com/carlosparra1998/WembleyStudiosMovies/blob/main/readme_raw/1.gif)
+<p align="center">
+  <img src="https://github.com/carlosparra1998/WembleyStudiosMovies/blob/main/readme_raw/2.gif" />
+</p>
+
+En este fragmento podemos comprobar el funcionamiento del **Search Bar**.
 
 
-En este fragmento podemos comprobar el funcionamiento del sistema de likes de la app.
-
-
-![](https://github.com/carlosparra1998/WembleyStudiosMovies/blob/main/readme_raw/2.gif)
-
-
-En este fragmento podemos comprobar el funcionamiento del search bar.
-
-
-![](https://github.com/carlosparra1998/WembleyStudiosMovies/blob/main/readme_raw/3.gif)
+<p align="center">
+  <img src="https://github.com/carlosparra1998/WembleyStudiosMovies/blob/main/readme_raw/3.gif" />
+</p>
