@@ -2,7 +2,7 @@
 
 Aplicación desarrollada en Flutter para la gestión de películas favoritas de los empleados de Wembley Studios.
 
-[DESCARGAR APK](https://github.com/carlosparra1998/WembleyStudiosMovies/raw/main/apk/app-release.apk)
+[**DESCARGAR APK**](https://github.com/carlosparra1998/WembleyStudiosMovies/raw/main/apk/app-release.apk)
 
 ## Funcionamiento
 
